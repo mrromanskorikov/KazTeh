@@ -10,7 +10,43 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap" rel="stylesheet">
-<style>
+
+ <style>
+  
+/* Выравнивание карточек и кнопок */
+.document-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 25px;
+}
+
+.document-card {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.document-info {
+    flex: 1 1 auto;
+}
+
+.document-link {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: auto !important;
+}
+
+@media (max-width: 768px) {
+    .document-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 :root{--ink:#172b3b;--steel:#244d6a;--deep:#102b43;--deep2:#0b2033;--concrete:#f1f3f4;--line:#d7dfe5;--signal:#f5ad16;--paper:#fff;--serif:"Helvetica Neue",Helvetica,Arial,"Arimo",sans-serif;--sans:"Helvetica Neue",Helvetica,Arial,"Arimo",sans-serif}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:90px}

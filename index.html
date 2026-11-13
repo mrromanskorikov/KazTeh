@@ -109,7 +109,6 @@ section .wrap.panel{
 /* Навигация между двумя страницами внутри одного HTML-документа */
 body.documents-page main > :not(#documents){display:none!important}
 body.documents-page main > #documents{display:block!important;min-height:70vh;padding-top:54px}
-body:not(.documents-page) #documents{display:none!important}
 .services {
   display: flex;
   flex-direction: row;
@@ -133,14 +132,22 @@ body:not(.documents-page) #documents{display:none!important}
 }
 
 #documents .panel {
-  text-align: center;
+  text-align: left;
+}
+
+#documents .docs-note {
+  max-width: 46em;
+  margin: 0;
+  color: #53616d;
+  font-size: .98rem;
+  line-height: 1.65;
 }
 
 #documents .more {
   margin-top: 20px;
 }
 
-#documents .more a {
+#documents .more a, .works-more a {
   display: inline-block;
   padding: 12px 28px;
   background: #1f5f8b;
@@ -150,9 +157,174 @@ body:not(.documents-page) #documents{display:none!important}
   font-weight: 600;
 }
 
-#documents .more a:hover {
+#documents .more a:hover, .works-more a:hover {
   background: #17496b;
 }
+
+/* ================================================================
+   Премиальное оформление: стеклянные блоки и тонкие линии обрамления
+   ================================================================ */
+:root{
+ --gold:#f5ad16;--gold-soft:rgba(245,173,22,.55);--gold-fade:rgba(245,173,22,0);
+ --glass:linear-gradient(150deg,rgba(255,255,255,.86),rgba(240,245,249,.70));
+ --glass-card:linear-gradient(145deg,rgba(255,255,255,.80),rgba(255,255,255,.48));
+ --hair:rgba(16,43,67,.08);
+ --shadow-lg:0 40px 90px -30px rgba(0,8,16,.65),0 2px 8px rgba(0,8,16,.25);
+ --shadow-sm:0 14px 34px -16px rgba(16,43,67,.30);
+}
+
+/* Фон страницы: глубокий тёмно-синий, мягкий свет и чертёжная сетка */
+body{
+ background-color:#0e2335;
+ background-image:
+  radial-gradient(1000px 700px at 4% 8%,rgba(58,112,150,.55),transparent 62%),
+  radial-gradient(800px 600px at 98% 42%,rgba(245,173,22,.13),transparent 60%),
+  radial-gradient(900px 700px at 30% 98%,rgba(44,92,128,.45),transparent 62%),
+  linear-gradient(rgba(255,255,255,.10) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.10) 1px,transparent 1px),
+  linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px),
+  linear-gradient(160deg,#173550 0%,#0e2335 50%,#12304a 100%);
+ background-size:auto,auto,auto,224px 224px,224px 224px,56px 56px,56px 56px,auto;
+ background-attachment:fixed;
+}
+
+/* Шапка — матовое стекло с золотой линией снизу */
+header{background:rgba(255,255,255,.72);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);border-bottom:0}
+header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold) 30%,rgba(36,77,106,.35) 70%,transparent)}
+
+/* Первый экран */
+.hero p{padding-left:22px;border-left:2px solid;border-image:linear-gradient(180deg,var(--gold),var(--gold-fade)) 1}
+
+/* Кнопки */
+.btn{background:linear-gradient(135deg,#ffd06a 0%,#f5ad16 52%,#d8900a 100%);border-radius:6px;letter-spacing:.02em;box-shadow:0 14px 30px -10px rgba(214,140,8,.7),inset 0 1px 0 rgba(255,255,255,.55)}
+.btn:hover{background:linear-gradient(135deg,#ffdb85 0%,#ffbb2e 52%,#e59a0e 100%)}
+
+/* Цифры — плавающая стеклянная плашка */
+.stats{width:calc(100% - 56px);max-width:1240px;margin-left:auto;margin-right:auto;border:0;border-radius:14px;background:linear-gradient(150deg,rgba(16,43,67,.80),rgba(9,29,46,.70));backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);box-shadow:var(--shadow-lg),inset 0 1px 0 rgba(255,255,255,.12)}
+.stats li{position:relative;border-right:0}
+.stats li:not(:last-child)::after{content:"";position:absolute;right:0;top:20%;bottom:20%;width:1px;background:linear-gradient(transparent,var(--gold-soft),transparent)}
+
+/* Большие панели разделов */
+section .wrap.panel,.docs .wrap.panel{
+ position:relative;
+ background:var(--glass);
+ backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+ border:0;border-radius:16px;
+ box-shadow:var(--shadow-lg),inset 0 1px 0 rgba(255,255,255,.85);
+}
+/* Градиентная рамка (золото → сталь → золото) */
+section .wrap.panel::before,.stats::before{
+ content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;
+ background:linear-gradient(135deg,rgba(245,173,22,.95),rgba(255,255,255,.7) 26%,rgba(36,77,106,.18) 55%,rgba(255,255,255,.5) 78%,rgba(245,173,22,.7));
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+ mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;
+}
+/* Общий стиль внутренних карточек */
+#services .services article,#services .service-additional,.about .about-copy,.why>div,.work,.review{
+ position:relative;overflow:hidden;
+ background:var(--glass-card);
+ border:1px solid rgba(255,255,255,.6);
+ border-radius:12px;
+ box-shadow:var(--shadow-sm),inset 0 0 0 1px var(--hair);
+}
+/* Вертикальная золотая линия слева */
+#services .services article::before,#services .service-additional::before,.about .about-copy::before,.why>div::before,.review::before{
+ content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--gold),rgba(245,173,22,.15))
+}
+#services .services article{border-left:1px solid rgba(255,255,255,.8);border-top:1px solid rgba(255,255,255,.8);transition:transform .3s,box-shadow .3s,background .3s}
+#services .services article:hover{background:linear-gradient(145deg,rgba(255,255,255,.95),rgba(255,255,255,.66));box-shadow:0 26px 50px -20px rgba(16,43,67,.35),inset 0 0 0 1px rgba(245,173,22,.35)}
+#services .service-additional{border-left:1px solid rgba(255,255,255,.8)}
+.about .about-copy{border-left:1px solid rgba(255,255,255,.8)}
+.about .about-copy p:last-child{border-top:1px solid rgba(245,173,22,.35)}
+.why>div{border-left:1px solid rgba(255,255,255,.8);padding:26px 28px 26px 30px}
+.review{border-left:1px solid rgba(255,255,255,.8);padding:30px 32px 28px 34px}
+.review blockquote{font-weight:400}
+.review::after{content:"“";position:absolute;right:22px;top:-8px;font:700 6rem/1 Georgia,serif;color:rgba(245,173,22,.22);pointer-events:none}
+
+/* Карточки работ: золотая линия под фото */
+.work .ph{position:relative}
+.work .ph::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,var(--gold),rgba(245,173,22,.15))}
+.work:hover{box-shadow:0 26px 50px -20px rgba(16,43,67,.35),inset 0 0 0 1px rgba(245,173,22,.35)}
+
+/* Ссылка на документы */
+#documents .more a,.works-more a{background:linear-gradient(135deg,#24577c,#102b43);border:1px solid rgba(245,173,22,.55);border-radius:6px;padding:14px 32px;letter-spacing:.02em;box-shadow:0 14px 30px -12px rgba(16,43,67,.6),inset 0 1px 0 rgba(255,255,255,.15)}
+#documents .more a:hover,.works-more a:hover{background:linear-gradient(135deg,#2c6890,#173b5a)}
+
+/* Контакты — тёмное стекло */
+.contacts .wrap.panel{background:linear-gradient(150deg,rgba(16,43,67,.90),rgba(9,29,46,.84));box-shadow:var(--shadow-lg),inset 0 1px 0 rgba(255,255,255,.1)}
+.contacts .cols>div{padding-left:22px;border-left:1px solid;border-image:linear-gradient(180deg,var(--gold),rgba(245,173,22,.05)) 1}
+
+/* Подвал */
+footer{position:relative;background:rgba(9,29,46,.96)}
+footer::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold-soft),transparent)}
+
+@media(max-width:900px){
+ .stats li:nth-child(2)::after{display:none}
+ .stats li{border-bottom-color:rgba(245,173,22,.25)}
+}
+@media(max-width:560px){
+ .stats{width:calc(100% - 32px)}
+ section .wrap.panel{border-radius:12px;margin:0 12px}
+ .why>div{padding:22px 22px 22px 24px}
+ .review{padding:24px 22px 22px 26px}
+}
+
+/* Шапка: тоньше, меню крупнее */
+header .wrap{min-height:64px;gap:22px}
+.logo img{height:36px}.logo span{font-size:1.08rem}
+nav{gap:24px}nav a{font-size:.96rem;letter-spacing:0}
+.tel{font-size:1rem}
+html{scroll-padding-top:78px}
+@media(max-width:1120px){nav{padding:0 0 10px}}
+@media(max-width:560px){header .wrap{min-height:56px;gap:8px}.logo{gap:7px}.logo img{height:28px}.logo span{font-size:.8rem}.tel{font-size:.8rem}nav a{font-size:.9rem}nav{gap:20px}}
+
+/* Расстояние между основными блоками (вдвое меньше прежнего) */
+section{padding:33px 0}
+#documents{padding:33px 0}
+@media(max-width:560px){section{padding:17px 0}}
+
+/* Блок «О компании»: вводный абзац, сетка 2×2 и итоговая цитата */
+.about-lead{max-width:56em;margin:0 0 34px;padding-left:22px;border-left:2px solid;border-image:linear-gradient(180deg,var(--gold),var(--gold-fade)) 1;font:400 clamp(1.08rem,1.5vw,1.28rem)/1.65 var(--sans);color:var(--deep)}
+.about-sub{margin:0 0 18px;font:700 1.25rem/1.3 var(--serif);color:var(--deep)}
+.about-points{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.about-points>div{position:relative;overflow:hidden;padding:24px 26px 24px 30px;background:var(--glass-card);border:1px solid rgba(255,255,255,.6);border-radius:12px;box-shadow:var(--shadow-sm),inset 0 0 0 1px var(--hair)}
+.about-points>div::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--gold),rgba(245,173,22,.15))}
+.about-points p{margin:0;color:#3f4f5c;font-size:.98rem;line-height:1.7}
+.about-quote{margin:28px 0 0;padding:22px 28px;border-radius:12px;background:linear-gradient(135deg,rgba(16,43,67,.92),rgba(36,77,106,.86));color:#fff;font:600 clamp(1rem,1.35vw,1.15rem)/1.6 var(--sans);box-shadow:var(--shadow-sm);border-left:3px solid var(--gold)}
+@media(max-width:760px){.about-points{grid-template-columns:1fr}.about-points>div{padding:20px 20px 20px 24px}.about-quote{padding:18px 20px}.about-lead{padding-left:16px}}
+
+/* Кнопка «Посмотреть все работы» под карточками */
+.works-more{margin:36px 0 0}
+
+/* ================================================================
+   Форма заявки (всплывающее окно) → WhatsApp
+   ================================================================ */
+.lead{width:min(460px,calc(100% - 32px));max-height:calc(100dvh - 32px);padding:0;border:0;border-radius:16px;color:var(--ink);background:transparent;overflow:visible}
+.lead::backdrop{background:rgba(6,24,39,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.lead[open]{animation:leadIn .28s ease-out}
+@keyframes leadIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.lead-box{position:relative;padding:38px 36px 32px;border-radius:16px;background:linear-gradient(150deg,rgba(255,255,255,.88),rgba(255,255,255,.72));backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);box-shadow:0 40px 90px -30px rgba(6,24,39,.6),inset 0 1px 0 rgba(255,255,255,.9)}
+.lead-box::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;background:linear-gradient(135deg,rgba(245,173,22,.95),rgba(255,255,255,.7) 30%,rgba(36,77,106,.2) 60%,rgba(245,173,22,.7));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
+.lead h2{font-size:1.7rem;margin:0 0 8px;padding:0}
+.lead-sub{margin:0 0 24px;color:#53616d;font-size:.95rem;line-height:1.55}
+.lead-close{position:absolute;top:12px;right:12px;width:38px;height:38px;border:0;border-radius:50%;background:rgba(16,43,67,.06);color:var(--deep);font-size:1.5rem;line-height:1;cursor:pointer}
+.lead-close:hover{background:rgba(16,43,67,.12)}
+.lead label{display:block;margin:0 0 16px;font-weight:700;font-size:.86rem;color:var(--deep)}
+.lead input{display:block;width:100%;margin-top:7px;padding:14px 16px;font:400 1rem/1.3 var(--sans);color:var(--ink);background:rgba(255,255,255,.75);border:1px solid rgba(16,43,67,.18);border-radius:8px;transition:border-color .2s,box-shadow .2s}
+.lead input:focus{outline:0;border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,173,22,.25)}
+.lead input[aria-invalid="true"]{border-color:#c0392b}
+.lead-err{min-height:1.3em;margin:-6px 0 10px;color:#c0392b;font-size:.84rem}
+.lead .btn{width:100%;justify-content:center;border:0;font:800 1rem/1 var(--sans);cursor:pointer;margin-top:4px}
+.lead .btn:after{content:none}
+.lead .btn svg{width:20px;height:20px;flex:none}
+.lead-note{margin:14px 0 0;color:#6a7884;font-size:.8rem;line-height:1.5;text-align:center}
+.lead-done{display:none;text-align:center}
+.lead.is-done form,.lead.is-done .lead-sub,.lead.is-done #lead-title{display:none}
+.lead.is-done .lead-done{display:block}
+.lead-done p{margin:0 0 18px;color:#53616d}
+.lead-done a{font-weight:800;white-space:nowrap}
+@media(max-width:560px){.lead-box{padding:32px 22px 24px}.lead h2{font-size:1.45rem}}
 
 </style>
 </head>
@@ -165,7 +337,7 @@ body:not(.documents-page) #documents{display:none!important}
    <a href="#services">Услуги</a>
    <a href="#about">О компании</a>
    <a href="#works">Наши работы</a>
-   <a href="#reviews">Отзывы</a>
+   <a href="reviews.html">Отзывы</a>
    <a href="documents.html">Разрешительные документы</a>
    <a href="#contacts">Контакты</a>
   </nav>
@@ -177,7 +349,7 @@ body:not(.documents-page) #documents{display:none!important}
  <div class="wrap">
   <h1>Техническое обследование зданий и сооружений</h1>
   <p>Экспертиза промышленной безопасности, техническое обследование и проектирование усиления конструкций. Работаем на объектах по всему Казахстану.</p>
-  <a class="btn" href="#contacts">оставить заявку</a>
+  <a class="btn" href="#contacts" data-lead>оставить заявку</a>
  </div>
 </div>
 
@@ -225,17 +397,15 @@ body:not(.documents-page) #documents{display:none!important}
 <section id="about" class="about">
  <div class="wrap panel">
   <h2>О компании</h2>
-  <div class="cols">
-   <p class="lead">ТОО «КазТехЭкспертиза» — специализированная экспертная организация, выполняющая весь спектр услуг по инженерно-техническому обследованию и промышленной безопасности зданий и сооружений по всему Казахстану.</p>
-   <div class="about-copy">
-    <h3>Команда экспертов, которой доверяют сложные задачи</h3>
-    <p>За нашей командой — десятилетия профессионального опыта, объединённые общей экспертизой, ответственностью и многолетней практикой совместной работы.</p>
-    <p>Мы специализируемся на оценке технического состояния и безопасности зданий и сооружений. Наша работа направлена на выявление потенциальных рисков, предупреждение аварийных ситуаций и обеспечение безопасности людей.</p>
-    <p>Каждый эксперт команды обладает профильным образованием, значительным практическим опытом и регулярно повышает квалификацию, следуя актуальным профессиональным стандартам и требованиям отрасли.</p>
-    <p>Мы придерживаемся принципов объективности, точности и персональной ответственности за результат. Гарантируем высокий уровень качества услуг, соблюдение согласованных сроков и индивидуальный подход к особенностям каждого объекта.</p>
-    <p class="about-emphasis">Наша экспертиза — это не просто оценка состояния объекта, а профессиональная ответственность за безопасность людей и надёжность сооружений.</p>
-   </div>
+  <p class="about-lead">ТОО «КазТехЭкспертиза» — специализированная экспертная организация, выполняющая весь спектр услуг по инженерно-техническому обследованию и промышленной безопасности зданий и сооружений по всему Казахстану.</p>
+  <h3 class="about-sub">Команда экспертов, которой доверяют сложные задачи</h3>
+  <div class="about-points">
+   <div><p>За нашей командой — десятилетия профессионального опыта, объединённые общей экспертизой, ответственностью и многолетней практикой совместной работы.</p></div>
+   <div><p>Мы специализируемся на оценке технического состояния и безопасности зданий и сооружений. Наша работа направлена на выявление потенциальных рисков, предупреждение аварийных ситуаций и обеспечение безопасности людей.</p></div>
+   <div><p>Каждый эксперт команды обладает профильным образованием, значительным практическим опытом и регулярно повышает квалификацию, следуя актуальным профессиональным стандартам и требованиям отрасли.</p></div>
+   <div><p>Мы придерживаемся принципов объективности, точности и персональной ответственности за результат. Гарантируем высокий уровень качества услуг, соблюдение согласованных сроков и индивидуальный подход к особенностям каждого объекта.</p></div>
   </div>
+  <p class="about-quote">Наша экспертиза — это не просто оценка состояния объекта, а профессиональная ответственность за безопасность людей и надёжность сооружений.</p>
  </div>
 </section>
 
@@ -255,16 +425,14 @@ body:not(.documents-page) #documents{display:none!important}
  <div class="wrap panel">
   <h2>Наши работы</h2>
   <div class="grid">
-   <article class="work"><div class="ph"><img loading="lazy" width="400" height="300" src="https://kaztehexpertiza.kz/wp-content/uploads/2021/04/Казфосфат.png" alt=""></div><div class="t"><small>2016</small><h3>Филиал ТОО «Казфосфат» ГПК «Каратау»</h3><p>Техническое обследование несущих конструкций здания и перекрытия АТЦ, зданий СРК, ДУК ЦОФ.</p></div></article>
-   <article class="work"><div class="ph"><img loading="lazy" width="400" height="300" src="https://kaztehexpertiza.kz/wp-content/uploads/2021/04/IMG_7214-1024x683.jpg" alt=""></div><div class="t"><small>2017</small><h3>АО «ССГПО»</h3><p>Комплексное обследование строительных конструкций зданий и сооружений (73 объекта разной сложности).</p></div></article>
-   <article class="work"><div class="ph"><img loading="lazy" width="400" height="300" src="https://kaztehexpertiza.kz/wp-content/uploads/elementor/thumbs/DSC02092-scaled-p5zensmncggdlyja0z5d4nj4crx6gc6qlijmhvzy3i.jpg" alt=""></div><div class="t"><small>2018</small><h3>АО «ССГПО»</h3><p>Обследование строительных конструкций зданий и сооружений (182 объекта разной сложности).</p></div></article>
-   <article class="work"><div class="ph"><img loading="lazy" width="400" height="300" src="https://kaztehexpertiza.kz/wp-content/uploads/2021/04/IMG_5404-1024x683.jpg" alt=""></div><div class="t"><small>2018</small><h3>АО «Алюминий Казахстана»</h3><p>Техническое обследование ГМЦ. Здание отделения выкручивания.</p></div></article>
-   <article class="work"><div class="ph"><img loading="lazy" width="400" height="300" src="https://kaztehexpertiza.kz/wp-content/uploads/2021/04/казминералз.jpg" alt=""></div><div class="t"><small>2019</small><h3>ТОО «KAZ Minerals Aktogay»</h3><p>Техническое обследование здания цеха электролиза.</p></div></article>
-   <article class="work"><div class="ph"><img loading="lazy" width="400" height="300" src="https://kaztehexpertiza.kz/wp-content/uploads/2021/04/шлам-1.jpg" alt=""></div><div class="t"><small>2019</small><h3>АО «Алюминий Казахстана»</h3><p>Техническое обследование шламонакопителя №3.</p></div></article>
-   <article class="work"><div class="ph"><img loading="lazy" width="400" height="300" src="https://kaztehexpertiza.kz/wp-content/uploads/2021/04/DJI_0957-1024x768.jpg" alt=""></div><div class="t"><small>2020</small><h3>АО «ТНК «Казхром»</h3><p>Техническое состояние зданий и сооружений АКТЗФ (52 объекта разной сложности).</p></div></article>
-   <article class="work"><div class="ph"><img loading="lazy" width="400" height="300" src="https://kaztehexpertiza.kz/wp-content/uploads/2021/04/еэк-1024x768.jpg" alt=""></div><div class="t"><small>2020</small><h3>АО «Евроазиатская энергетическая корпорация»</h3><p>Техническое обследование десяти объектов разреза «Восточный».</p></div></article>
+   <article class="work"><div class="ph"><img loading="lazy" width="400" height="300" src="images/works/2026-pavlodarenergo.jpg" alt="АО Павлодарэнерго"></div><div class="t"><small>2026</small><h3>АО «Павлодарэнерго»</h3><p>Обследование дымовой трубы.</p></div></article>
+   <article class="work"><div class="ph"><img loading="lazy" width="400" height="300" src="images/works/2025-kazzinc.jpg" alt="ТОО Казцинк"></div><div class="t"><small>2025</small><h3>ТОО «Казцинк»</h3><p>Техническое обследование здания медеплавильного цеха.</p></div></article>
+   <article class="work"><div class="ph"><img loading="lazy" width="400" height="300" src="images/works/2024-maek.jpg" alt="ТОО Мангистауский атомный энергетический комбинат"></div><div class="t"><small>2024</small><h3>ТОО «Мангистауский атомный энергетический комбинат»</h3><p>Техническое обследование здания 132, ГК ТЭЦ-2.</p></div></article>
+   <article class="work"><div class="ph"><img loading="lazy" width="400" height="300" src="images/works/2023-altynalmas.jpg" alt="АО АК Алтыналмас"></div><div class="t"><small>2023</small><h3>АО «АК Алтыналмас»</h3><p>Техническое обследование промышленных зданий (5 объектов).</p></div></article>
+   <article class="work"><div class="ph"><img loading="lazy" width="400" height="300" src="images/works/2022-katco.jpg" alt="ТОО Казахстанско-французское совместное предприятие КАТКО"></div><div class="t"><small>2022</small><h3>ТОО «Казахстанско-французское совместное предприятие „КАТКО“»</h3><p>Техническое обследование зданий (19 объектов).</p></div></article>
    <article class="work"><div class="ph"><img loading="lazy" width="400" height="300" src="https://kaztehexpertiza.kz/wp-content/uploads/2021/04/DJI_0602-1024x768.jpg" alt=""></div><div class="t"><small>2021</small><h3>АО «ТНК «Казхром», рудник «Восточный Камыс»</h3><p>Оценка промышленной безопасности объектов (23 объекта разной сложности).</p></div></article>
   </div>
+  <p class="works-more"><a href="works.html">Посмотреть все работы</a></p>
  </div>
 </section>
 
@@ -289,14 +457,15 @@ body:not(.documents-page) #documents{display:none!important}
     <figcaption><b>ТОО «Богатырь Комир»</b>Периодическое обследование зданий и сооружений котельных, фундаментов котловых агрегатов, техническое диагностирование котлов.<br>Главный инженер Н.М. Казанцев, исх. № 1056 от 04.10.2016</figcaption>
    </figure>
   </div>
-  <p class="more"><a href="/отзывы/">Смотреть сканы писем</a></p>
+  <p class="more"><a href="reviews.html">Смотреть сканы писем</a></p>
  </div>
 </section>
  
 
 <section id="documents">
   <div class="wrap panel">
-    <h2>РАЗРЕШИТЕЛЬНЫЕ ДОКУМЕНТЫ</h2>
+    <h2>Разрешительные документы</h2>
+    <p class="docs-note">Государственные лицензии ТОО «КазТехЭкспертиза» на русском и казахском языках. Они подтверждают наше право выполнять обследование зданий и сооружений, экспертизу и проектирование. Все документы можно открыть и посмотреть онлайн в формате PDF.</p>
     <p class="more">
       <a href="documents.html">Ознакомиться с документами</a>
     </p>
@@ -325,6 +494,85 @@ body:not(.documents-page) #documents{display:none!important}
 /* старые ссылки вида index.html#documents ведут на отдельную страницу */
 function go(){if(location.hash==='#documents')location.replace('documents.html');}
 go();window.addEventListener('hashchange',go);
+</script>
+
+<dialog class="lead" id="lead" aria-labelledby="lead-title">
+ <div class="lead-box">
+  <button class="lead-close" type="button" aria-label="Закрыть">×</button>
+  <h2 id="lead-title">Оставить заявку</h2>
+  <p class="lead-sub">Оставьте имя и номер телефона — специалист свяжется с вами, ответит на вопросы и рассчитает стоимость работ.</p>
+  <form novalidate>
+   <label>Ваше имя
+    <input name="name" type="text" autocomplete="name" maxlength="60" required placeholder="Например, Алексей">
+   </label>
+   <label>Номер телефона
+    <input name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" required placeholder="+7 (___) ___-__-__">
+   </label>
+   <p class="lead-err" aria-live="polite"></p>
+   <button class="btn" type="submit">
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3Z"/></svg>
+    Отправить в WhatsApp
+   </button>
+   <p class="lead-note">Откроется WhatsApp с готовым сообщением — останется нажать «Отправить».</p>
+  </form>
+  <div class="lead-done" role="status">
+   <h2>Почти готово</h2>
+   <p>Отправьте сообщение в открывшемся WhatsApp. Если он не открылся — позвоните нам: <a href="tel:+77074664090">8 707 466 40 90</a></p>
+   <button class="btn lead-again" type="button">Закрыть</button>
+  </div>
+ </div>
+</dialog>
+
+<script>
+/* Форма заявки: имя + телефон → готовое сообщение в WhatsApp компании */
+(function(){
+ var WA_NUMBER='77074664090'; // рабочий WhatsApp: только цифры, с кодом страны
+ var dlg=document.getElementById('lead');
+ if(!dlg||typeof dlg.showModal!=='function')return; // старый браузер — кнопка ведёт к контактам
+ var form=dlg.querySelector('form'),err=dlg.querySelector('.lead-err');
+ var nameIn=form.elements.name,phoneIn=form.elements.phone;
+
+ function open(e){e.preventDefault();dlg.classList.remove('is-done');err.textContent='';dlg.showModal();nameIn.focus();}
+ document.querySelectorAll('[data-lead]').forEach(function(b){b.addEventListener('click',open);});
+ dlg.querySelector('.lead-close').addEventListener('click',function(){dlg.close();});
+ dlg.querySelector('.lead-again').addEventListener('click',function(){dlg.close();});
+ dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close();}); // клик по затемнению
+
+ /* Маска телефона: +7 (707) 466-40-90 */
+ /* «+7 (» уже стоит в поле, человек вводит только 10 цифр номера */
+ phoneIn.addEventListener('focus',function(){if(!phoneIn.value)phoneIn.value='+7 (';});
+ phoneIn.addEventListener('blur',function(){if(phoneIn.value.replace(/\D/g,'').length<2)phoneIn.value='';});
+ phoneIn.addEventListener('input',function(){
+  var d=phoneIn.value.replace(/\D/g,'');
+  if(d.length>11)d=d.slice(-11);           // вставили «8 707…» или «+7 707…» поверх «+7 (»
+  if(d[0]==='8'&&d.length===11)d='7'+d.slice(1);
+  if(d[0]!=='7')d='7'+d;
+  if(d[1]==='8')d='7'+d.slice(2);           // привычная «8» после «+7 (» — лишняя
+  d=d.slice(0,11);
+  var r='+7 ('+d.slice(1,4);
+  if(d.length>4)r+=') '+d.slice(4,7);
+  if(d.length>7)r+='-'+d.slice(7,9);
+  if(d.length>9)r+='-'+d.slice(9,11);
+  phoneIn.value=r;
+  phoneIn.removeAttribute('aria-invalid');err.textContent='';
+ });
+ nameIn.addEventListener('input',function(){nameIn.removeAttribute('aria-invalid');err.textContent='';});
+
+ form.addEventListener('submit',function(e){
+  e.preventDefault();
+  var name=nameIn.value.trim(),digits=phoneIn.value.replace(/\D/g,'');
+  if(name.length<2){err.textContent='Пожалуйста, укажите имя.';nameIn.setAttribute('aria-invalid','true');nameIn.focus();return;}
+  if(digits.length!==11){err.textContent='Укажите номер полностью: +7 и 10 цифр.';phoneIn.setAttribute('aria-invalid','true');phoneIn.focus();return;}
+  err.textContent='';
+  var text='Здравствуйте! Заявка с сайта КазТехЭкспертиза.\nИмя: '+name+'\nТелефон: '+phoneIn.value;
+  var url='https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(text);
+  var w=window.open(url,'_blank');
+  if(w){try{w.opener=null;}catch(_){}}
+  else location.href=url; // если всплывающие окна заблокированы
+  dlg.classList.add('is-done');
+  form.reset();
+ });
+})();
 </script>
 </body>
 </html>

@@ -110,7 +110,23 @@ section .wrap.panel{
 body.documents-page main > :not(#documents){display:none!important}
 body.documents-page main > #documents{display:block!important;min-height:70vh;padding-top:54px}
 body:not(.documents-page) #documents{display:none!important}
+.services {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  align-items: stretch;
+}
 
+.services article {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .services {
+    flex-direction: column;
+  }
+}
 </style>
 </head>
 <body>

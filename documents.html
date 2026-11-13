@@ -13,6 +13,28 @@
 
  <style>
   
+/* Кнопка «Вернуться на главную» */
+.back-button,
+.back-to-home,
+a[href="index.html"] {
+    margin-left: 2cm !important;
+    border: 2px solid #1f4e79 !important;
+    border-radius: 8px !important;
+    padding: 10px 20px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+}
+
+/* Эффект при наведении */
+.back-button:hover,
+.back-to-home:hover,
+a[href="index.html"]:hover {
+    background-color: #1f4e79 !important;
+    color: #ffffff !important;
+    border-color: #163955 !important;
+}
+  
 /* Выравнивание карточек и кнопок */
 .document-grid {
     display: grid;

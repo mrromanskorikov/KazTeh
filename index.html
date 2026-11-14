@@ -3,6 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();
+   for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+   k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js?id=114246368", "ym");
+   ym(114246368, "init", {ssr:true, webvisor:true, clickmap:true, accurateTrackBounce:true, trackLinks:true});
+
+   /* Цели Метрики: звонок, почта, лицензии, письма, «все работы» */
+   document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a"); if (!a) return;
+    var h = a.getAttribute("href") || "", g = null;
+    if (h.indexOf("tel:") === 0) g = "phone_click";
+    else if (h.indexOf("mailto:") === 0) g = "email_click";
+    else if (h.indexOf("License/") === 0) g = "license_open";
+    else if (h.indexOf("letters/") === 0) g = "letter_open";
+    else if (h === "works.html" && a.closest(".works-more")) g = "works_all";
+    if (g) ym(114246368, "reachGoal", g);
+   }, true);
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/114246368" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 <title>Техническое обследование зданий и сооружений — ТОО «КазТехЭкспертиза»</title>
 <meta name="description" content="Техническое обследование зданий и сооружений, экспертиза промышленной безопасности, проектирование усиления конструкций по всему Казахстану. Более 1000 обследованных объектов, гарантия на выполненные услуги 3 года.">
 <link rel="canonical" href="https://kaztehexpertiza.kz/">
@@ -539,7 +562,7 @@ go();window.addEventListener('hashchange',go);
  var form=dlg.querySelector('form'),err=dlg.querySelector('.lead-err');
  var nameIn=form.elements.name,phoneIn=form.elements.phone;
 
- function open(e){e.preventDefault();dlg.classList.remove('is-done');err.textContent='';dlg.showModal();nameIn.focus();}
+ function open(e){e.preventDefault();dlg.classList.remove('is-done');err.textContent='';dlg.showModal();nameIn.focus();if(window.ym)ym(114246368,'reachGoal','lead_open');}
  document.querySelectorAll('[data-lead]').forEach(function(b){b.addEventListener('click',open);});
  dlg.querySelector('.lead-close').addEventListener('click',function(){dlg.close();});
  dlg.querySelector('.lead-again').addEventListener('click',function(){dlg.close();});
@@ -571,6 +594,7 @@ go();window.addEventListener('hashchange',go);
   if(name.length<2){err.textContent='Пожалуйста, укажите имя.';nameIn.setAttribute('aria-invalid','true');nameIn.focus();return;}
   if(digits.length!==11){err.textContent='Укажите номер полностью: +7 и 10 цифр.';phoneIn.setAttribute('aria-invalid','true');phoneIn.focus();return;}
   err.textContent='';
+  if(window.ym)ym(114246368,'reachGoal','lead_whatsapp');
   var text='Здравствуйте! Заявка с сайта КазТехЭкспертиза.\nИмя: '+name+'\nТелефон: '+phoneIn.value;
   var url='https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(text);
   var w=window.open(url,'_blank');
